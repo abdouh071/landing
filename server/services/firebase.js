@@ -7,8 +7,10 @@
 require('dotenv').config();
 
 // Flag to determine if we use mock mode
+// Flag to determine if we use mock mode
 const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_PATH;
-const useMockMode = !serviceAccountPath;
+const serviceAccountEnv = process.env.FIREBASE_SERVICE_ACCOUNT;
+const useMockMode = !serviceAccountPath && !serviceAccountEnv;
 
 let admin = null;
 let db = null;
@@ -18,17 +20,36 @@ let auth = null;
 if (!useMockMode) {
   try {
     admin = require('firebase-admin');
-    const serviceAccount = require(`../../${serviceAccountPath}`);
     
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
-      databaseURL: process.env.FIREBASE_DATABASE_URL
-    });
+    let serviceAccount;
+    // Check if we have the JSON string in env var (Best for Render/Railway)
+    if (serviceAccountEnv) {
+      try {
+        serviceAccount = JSON.parse(serviceAccountEnv);
+      } catch (e) {
+        console.error('Failed to parse FIREBASE_SERVICE_ACCOUNT json', e);
+      }
+    } 
+    // Fallback to file path (Best for local dev)
+    else if (serviceAccountPath) {
+      serviceAccount = require(`../../${serviceAccountPath}`);
+    }
+
+    if (serviceAccount) {
+      admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+        databaseURL: process.env.FIREBASE_DATABASE_URL
+      });
+      
+      db = admin.firestore();
+      auth = admin.auth();
+      
+      console.log('✅ Firebase Admin initialized');
+    } else {
+      throw new Error('No valid service account found');
+    }
     
-    db = admin.firestore();
-    auth = admin.auth();
-    
-    console.log('✅ Firebase Admin initialized with service account');
+    // (Redundant lines removed)
   } catch (error) {
     console.error('❌ Firebase initialization error:', error.message);
     console.log('⚠️  Falling back to mock mode');
