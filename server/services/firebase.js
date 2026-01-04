@@ -5,6 +5,7 @@
  */
 
 require('dotenv').config();
+const path = require('path');
 
 // Flag to determine if we use mock mode
 // Flag to determine if we use mock mode
@@ -32,7 +33,9 @@ if (!useMockMode) {
     } 
     // Fallback to file path (Best for local dev)
     else if (serviceAccountPath) {
-      serviceAccount = require(`../../${serviceAccountPath}`);
+      // Resolve path relative to project root
+      const absolutePath = path.resolve(__dirname, '../../', serviceAccountPath.replace(/^\.\//, ''));
+      serviceAccount = require(absolutePath);
     }
 
     if (serviceAccount) {
