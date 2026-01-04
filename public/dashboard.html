@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Ecom-Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <!-- Login Screen -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="login-header">
+        <h1 class="login-title">🔐 Admin Login</h1>
+        <p class="login-subtitle">Sign in to manage your store</p>
+      </div>
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" required placeholder="admin@example.com">
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
+          Sign In
+        </button>
+        <p class="login-note">
+          <strong>Credentials:</strong><br>
+          See <code>ADMIN_EMAIL</code> and <code>ADMIN_PASSWORD</code> in your <code>.env</code> file.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dashboard Container -->
+  <div class="dashboard-container" id="dashboardContainer" style="display: none;">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2 class="sidebar-logo">📦 Ecom-Shop</h2>
+        <span class="sidebar-badge">Admin</span>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="products">
+          <span class="nav-icon">📱</span>
+          Products
+        </a>
+        <a href="#" class="nav-item" data-section="variants">
+          <span class="nav-icon">🎨</span>
+          Variants
+        </a>
+        <a href="#" class="nav-item" data-section="orders">
+          <span class="nav-icon">📋</span>
+          Orders
+        </a>
+        <a href="#" class="nav-item" data-section="settings">
+          <span class="nav-icon">⚙️</span>
+          Settings
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <button class="btn btn-ghost btn-full" id="logoutBtn">
+          <span>🚪</span> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="dashboard-header">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuToggle">☰</button>
+          <h1 class="page-title" id="pageTitle">Products</h1>
+        </div>
+        <div class="header-right">
+          <span class="user-email" id="userEmail">admin@ecom-shop.com</span>
+        </div>
+      </header>
+
+      <!-- Content Sections -->
+      <div class="content-wrapper">
+        
+        <!-- Products Section -->
+        <section class="content-section active" id="productsSection">
+          <div class="section-header">
+            <h2>Product Management</h2>
+            <button class="btn btn-primary" id="addProductBtn">+ Add Product</button>
+          </div>
+          
+          <div class="products-grid" id="productsGrid">
+            <!-- Products will be loaded here -->
+          </div>
+
+          <!-- Product Form Modal -->
+          <div class="modal" id="productModal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 id="productModalTitle">Add Product</h3>
+                <button class="modal-close" id="closeProductModal">&times;</button>
+              </div>
+              <form id="productForm" class="modal-form">
+                <input type="hidden" id="productEditId">
+                
+                <div class="form-group">
+                  <label for="productName">Product Name (Arabic)</label>
+                  <input type="text" id="productName" required placeholder="اسم المنتج">
+                </div>
+                
+                <div class="form-group">
+                  <label for="productNameFr">Product Name (French)</label>
+                  <input type="text" id="productNameFr" required placeholder="Nom du produit">
+                </div>
+
+                <div class="form-group">
+                  <label for="productPrice">Price (DZD)</label>
+                  <input type="number" id="productPrice" placeholder="e.g. 5000" min="0" step="0.01">
+                </div>
+                
+                <div class="form-group">
+                  <label for="productImage">Main Image</label>
+                  <div class="image-upload-area" id="productImageUpload">
+                    <input type="file" id="productImageFile" accept="image/*" hidden>
+                    <div class="upload-placeholder" id="productUploadPlaceholder">
+                      <span class="upload-icon">📷</span>
+                      <span>Click to upload image</span>
+                    </div>
+                    <img id="productImagePreview" class="image-preview" style="display:none;">
+                  </div>
+                  <input type="hidden" id="productImageUrl">
+                </div>
+                
+                <div class="form-group">
+                  <label class="toggle-label">
+                    <input type="checkbox" id="productInStock" checked>
+                    <span class="toggle-switch"></span>
+                    <span>In Stock</span>
+                  </label>
+                </div>
+                
+                <div class="form-actions">
+                  <button type="button" class="btn btn-ghost" id="cancelProductBtn">Cancel</button>
+                  <button type="submit" class="btn btn-primary" id="saveProductBtn">Save Product</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- Variants Section -->
+        <section class="content-section" id="variantsSection">
+          <div class="section-header">
+            <h2>Variant Management</h2>
+            <button class="btn btn-primary" id="addVariantBtn">+ Add Variant</button>
+          </div>
+          
+          <div class="variants-list" id="variantsList">
+            <!-- Variants will be loaded here -->
+          </div>
+
+          <!-- Variant Form Modal -->
+          <div class="modal" id="variantModal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 id="variantModalTitle">Add Variant</h3>
+                <button class="modal-close" id="closeVariantModal">&times;</button>
+              </div>
+              <form id="variantForm" class="modal-form">
+                <input type="hidden" id="variantEditId">
+                
+                <div class="form-group">
+                  <label for="variantProductId">Product</label>
+                  <select id="variantProductId" required>
+                    <option value="">Select Product</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="variantName">Variant Name (Arabic)</label>
+                  <input type="text" id="variantName" required placeholder="اسم النوع">
+                </div>
+                
+                <div class="form-group">
+                  <label for="variantNameFr">Variant Name (French)</label>
+                  <input type="text" id="variantNameFr" required placeholder="Nom de la variante">
+                </div>
+                
+                <div class="form-group">
+                  <label for="variantImage">Variant Image</label>
+                  <div class="image-upload-area" id="variantImageUpload">
+                    <input type="file" id="variantImageFile" accept="image/*" hidden>
+                    <div class="upload-placeholder" id="variantUploadPlaceholder">
+                      <span class="upload-icon">📷</span>
+                      <span>Click to upload image</span>
+                    </div>
+                    <img id="variantImagePreview" class="image-preview" style="display:none;">
+                  </div>
+                  <input type="hidden" id="variantImageUrl">
+                </div>
+                
+                <div class="form-actions">
+                  <button type="button" class="btn btn-ghost" id="cancelVariantBtn">Cancel</button>
+                  <button type="submit" class="btn btn-primary" id="saveVariantBtn">Save Variant</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- Orders Section -->
+        <section class="content-section" id="ordersSection">
+          <div class="section-header">
+            <h2>Orders</h2>
+            <button class="btn btn-ghost" id="refreshOrdersBtn">🔄 Refresh</button>
+          </div>
+          
+          <div class="orders-table-container">
+            <table class="orders-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Item</th>
+                  <th>Customer</th>
+                  <th>Phone</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody">
+                <!-- Orders will be loaded here -->
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="empty-state" id="ordersEmpty" style="display:none;">
+            <span class="empty-icon">📭</span>
+            <p>No orders yet</p>
+          </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section class="content-section" id="settingsSection">
+          <div class="section-header">
+            <h2>Store Settings</h2>
+          </div>
+          
+          <div class="settings-card">
+            <form id="settingsForm">
+              <div class="form-group">
+                <label for="settingsStoreName">Store Name (Arabic)</label>
+                <input type="text" id="settingsStoreName" placeholder="Ecom-Shop">
+              </div>
+              
+              <div class="form-group">
+                <label for="settingsStoreNameFr">Store Name (French)</label>
+                <input type="text" id="settingsStoreNameFr" placeholder="Ecom-Shop">
+              </div>
+              
+              <div class="form-group">
+                <label for="settingsOutOfStock">Out of Stock Message (Arabic)</label>
+                <textarea id="settingsOutOfStock" rows="2"></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label for="settingsOutOfStockFr">Out of Stock Message (French)</label>
+                <textarea id="settingsOutOfStockFr" rows="2"></textarea>
+              </div>
+              
+              <button type="submit" class="btn btn-primary">Save Settings</button>
+            </form>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Custom Confirm Modal -->
+  <div class="modal" id="confirmModal">
+    <div class="modal-content" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3 id="confirmModalTitle">Confirm Action</h3>
+        <button class="modal-close" id="closeConfirmModal">&times;</button>
+      </div>
+      <div class="modal-form">
+        <p id="confirmModalMessage" style="margin-bottom: 24px; color: var(--text-secondary);">Are you sure you want to proceed?</p>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="confirmCancelBtn">Cancel</button>
+          <button type="button" class="btn btn-danger" id="confirmOkBtn">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

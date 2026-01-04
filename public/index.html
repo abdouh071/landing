@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Ecom-Shop - متجر إلكتروني متميز" />
+    <title>Ecom-Shop | المتجر الإلكتروني</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/landing.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container header-content">
+        <h1 class="store-name" id="storeName">Ecom-Shop</h1>
+        <button class="lang-switch" id="langSwitch" aria-label="تغيير اللغة">
+          <span class="lang-icon">🌐</span>
+          <span class="lang-text">FR</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="container">
+        <!-- Product Section -->
+        <section class="product-section">
+          <!-- Main Product Image -->
+          <div class="product-image-container">
+            <div class="image-wrapper">
+              <img
+                id="mainProductImage"
+                src="https://via.placeholder.com/500x500/667eea/ffffff?text=Loading..."
+                alt="صورة المنتج"
+                class="main-image"
+              />
+              <div class="stock-badge in-stock" id="stockBadge">
+                <span data-i18n="inStock">متوفر</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Header (Title + Price) -->
+          <div class="product-header">
+            <h2 class="product-name" id="productName">جاري التحميل...</h2>
+            <div class="product-price" id="productPrice"></div>
+          </div>
+
+          <!-- Variant Images -->
+          <div class="variants-section">
+            <h3 class="variants-title" data-i18n="selectVariant">اختر النوع</h3>
+            <div class="variants-grid" id="variantsGrid">
+              <!-- Variants will be loaded here -->
+            </div>
+            <p
+              class="variant-error"
+              id="variantError"
+              data-i18n="selectVariantError"
+            >
+              يرجى اختيار نوع المنتج
+            </p>
+          </div>
+        </section>
+
+        <!-- Order Form Section -->
+        <section class="order-section">
+          <h3 class="order-title" data-i18n="orderForm">نموذج الطلب</h3>
+
+          <form id="orderForm" class="order-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName" data-i18n="firstName">الاسم</label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  required
+                  autocomplete="given-name"
+                  placeholder="الاسم"
+                  data-i18n-placeholder="firstName"
+                />
+                <span class="error-message" id="firstNameError"></span>
+              </div>
+              <div class="form-group">
+                <label for="lastName" data-i18n="lastName">اللقب</label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  required
+                  autocomplete="family-name"
+                  placeholder="اللقب"
+                  data-i18n-placeholder="lastName"
+                />
+                <span class="error-message" id="lastNameError"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone" data-i18n="phone">رقم الهاتف</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                autocomplete="tel"
+                pattern="[0-9+\s-]{8,15}"
+                placeholder="رقم الهاتف"
+                data-i18n-placeholder="phone"
+              />
+              <span class="error-message" id="phoneError"></span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="stateInput" data-i18n="state">الولاية</label>
+                <div class="searchable-select" id="stateSelectWrapper">
+                  <input
+                    type="text"
+                    id="stateInput"
+                    class="searchable-input"
+                    autocomplete="off"
+                    placeholder="اختر الولاية"
+                    data-i18n-placeholder="selectState"
+                  />
+                  <input type="hidden" id="state" name="state" required />
+                  <div class="select-dropdown" id="stateDropdown"></div>
+                </div>
+                <span class="error-message" id="stateError"></span>
+              </div>
+              <div class="form-group">
+                <label for="municipalityInput" data-i18n="municipality">البلدية</label>
+                <div class="searchable-select" id="municipalitySelectWrapper">
+                  <input
+                    type="text"
+                    id="municipalityInput"
+                    class="searchable-input"
+                    autocomplete="off"
+                    placeholder="اختر البلدية"
+                    data-i18n-placeholder="selectCommune"
+                  />
+                  <input type="hidden" id="municipality" name="municipality" required />
+                  <div class="select-dropdown" id="municipalityDropdown"></div>
+                </div>
+                <span class="error-message" id="municipalityError"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address" data-i18n="address">العنوان الكامل</label>
+              <textarea
+                id="address"
+                name="address"
+                rows="3"
+                required
+                placeholder="العنوان الكامل"
+                data-i18n-placeholder="address"
+              ></textarea>
+              <span class="error-message" id="addressError"></span>
+            </div>
+
+            <!-- Hidden fields -->
+            <input type="hidden" id="productId" name="productId" />
+            <input type="hidden" id="variantId" name="variantId" />
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+              <span data-i18n="orderNow">اطلب الآن</span>
+              <svg
+                class="btn-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          </form>
+        </section>
+
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+          <div class="success-content">
+            <div class="success-icon">✓</div>
+            <p class="success-text" id="successText">
+              نفذت الكمية، سنتواصل معك قريبا عند توفره من جديد
+            </p>
+            <button class="close-btn" id="closeSuccess" data-i18n="close">
+              إغلاق
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>
+          &copy; 2024 Ecom-Shop.
+          <span data-i18n="allRights">جميع الحقوق محفوظة</span>
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/landing.js"></script>
+  </body>
+</html>

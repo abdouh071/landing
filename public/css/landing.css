@@ -1,0 +1,904 @@
+/**
+ * Landing Page Styles
+ * Modern, professional Arabic RTL e-commerce design
+ */
+
+/* ============ CSS Variables ============ */
+:root {
+  /* Colors - Light Theme */
+  --primary: #667eea;
+  --primary-dark: #5a67d8;
+  --primary-light: #818cf8;
+  --secondary: #764ba2;
+  --accent: #f093fb;
+
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
+
+  --bg-body: #f9fafb;
+  --bg-surface: #ffffff;
+  --bg-input: #f3f4f6;
+  --bg-header: rgba(255, 255, 255, 0.85);
+  
+  --text-main: #1f2937;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --text-inverse: #ffffff;
+
+  --white: #ffffff;
+  --dark: #1a1a2e; /* Kept for specific uses if any */
+
+  /* Typography */
+  --font-ar: "Cairo", "Segoe UI", Tahoma, sans-serif;
+  --font-fr: "Poppins", "Segoe UI", Tahoma, sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.25);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+}
+
+/* ============ Reset & Base ============ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-ar);
+  background: var(--bg-body);
+  color: var(--text-main);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+body.lang-fr {
+  font-family: var(--font-fr);
+  direction: ltr;
+}
+
+/* ============ Container ============ */
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+/* ============ Header ============ */
+.header {
+  background: var(--bg-header);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.store-name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  background: linear-gradient(
+    135deg,
+    var(--primary-light) 0%,
+    var(--accent) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-full);
+  color: var(--text-main);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.lang-switch:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.lang-icon {
+  font-size: 1.125rem;
+}
+
+/* ============ Main Content ============ */
+.main {
+  padding: var(--spacing-xl) 0 var(--spacing-2xl);
+}
+
+/* ============ Product Section ============ */
+.product-section {
+  text-align: start;
+  margin-bottom: var(--spacing-2xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .product-section {
+    display: block; /* Allow normal flow for desktop if needed, or keep flex column. But title alignment requests start */
+    /* Actually better to use display block and text-align start */
+    display: block;
+  }
+}
+/* For centering image but aligning text, we might need to separate them if they are siblings.
+   Currently structure is: image-container then product-info (implicitly? let's check JS render).
+   Let's keep it simple: text-align: start affects inline content.
+   If we want the TITLE to be start, but image centered?
+   User said "make the title in the right if arabic , in left if french , instead of in the middle".
+   So Title needs to be start. Image typically looks better centered.
+*/
+
+.product-section {
+  text-align: center; /* Default center for image */
+  margin-bottom: var(--spacing-2xl);
+}
+
+.product-header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap; 
+}
+
+.product-name {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0;
+  color: var(--text-main);
+  text-align: start;
+  width: auto;
+}
+
+.product-image-container {
+  margin-bottom: var(--spacing-xl);
+}
+
+.image-wrapper {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl), var(--shadow-glow);
+}
+
+.main-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-slow);
+}
+
+.image-wrapper:hover .main-image {
+  transform: scale(1.03);
+}
+
+.stock-badge {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+body.lang-fr .stock-badge {
+  right: auto;
+  left: var(--spacing-md);
+}
+
+.stock-badge.in-stock {
+  background: var(--success);
+  color: var(--white);
+}
+
+.stock-badge.out-of-stock {
+  background: var(--error);
+  color: var(--white);
+}
+
+
+
+.product-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0;
+  text-align: start;
+}
+
+/* ============ Variants Section ============ */
+.variants-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.variants-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
+  text-align: start;
+}
+
+.variants-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  max-width: 320px; /* Constrain width to keep items close when 2 per row */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* If only one child, make it span full width or just be centered. 
+   Since we used justify-items: center, a single item will be in the first column but centered in that cell. 
+   To center it in the whole container, we can use a js helper or just use flex for single items?
+   Actually, user said "if there is just one variant keep it like it is now".
+   Grid with 2 columns will put the first one on left unless we span. 
+   css :has() selector is great for this! 
+*/
+.variants-grid:has(.variant-wrapper:only-child) {
+  display: flex;
+  justify-content: center;
+}
+
+.variant-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  cursor: pointer;
+  width: 140px; /* Match item width */
+}
+
+.variant-item {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 3px solid transparent;
+  transition: all var(--transition-base);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+.variant-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.2;
+  transition: color var(--transition-base);
+}
+
+.variant-wrapper:hover .variant-item {
+  transform: translateY(-4px);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.variant-wrapper:hover .variant-name {
+  color: var(--primary);
+}
+
+.variant-wrapper.selected .variant-item {
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-glow);
+}
+
+.variant-wrapper.selected .variant-name {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.variant-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.variant-item .check-mark {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  background: var(--primary);
+  border-radius: var(--radius-full);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--white);
+}
+
+body.lang-fr .variant-item .check-mark {
+  right: auto;
+  left: 4px;
+}
+
+.variant-wrapper.selected .check-mark {
+  display: flex;
+}
+
+.variant-error {
+  color: #991b1b;
+  background-color: #fef2f2;
+  border: 1px solid #fee2e2;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: var(--spacing-md);
+  display: none;
+  text-align: center;
+  width: 100%;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.variant-error.show {
+  display: block;
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* ============ Order Section ============ */
+.order-section {
+  background: var(--bg-surface);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.order-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-lg);
+  text-align: start;
+  color: var(--text-main);
+}
+
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: var(--spacing-md);
+  background: var(--bg-input);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all var(--transition-base);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--gray-500);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+  border-color: var(--error);
+}
+
+.form-group select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 12px center;
+  background-size: 16px;
+  padding-left: 40px;
+}
+
+body.lang-fr .form-group select {
+  background-position: right 12px center;
+  padding-left: var(--spacing-md);
+  padding-right: 40px;
+}
+
+.form-group select option {
+  background: var(--dark);
+  color: var(--white);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.error-message {
+  font-size: 0.75rem;
+  color: var(--error);
+  min-height: 1rem;
+}
+
+/* ============ Submit Button ============ */
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-xl);
+  margin-top: var(--spacing-md);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  border: none;
+  border-radius: var(--radius-lg);
+  color: var(--white);
+  font-family: inherit;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-lg);
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl), var(--shadow-glow);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submit-btn .btn-icon {
+  width: 20px;
+  height: 20px;
+  transform: rotate(180deg);
+}
+
+body.lang-fr .submit-btn .btn-icon {
+  transform: rotate(0deg);
+}
+
+/* ============ Success Message ============ */
+.success-message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing-lg);
+  backdrop-filter: blur(5px);
+}
+
+.success-message.show {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.success-content {
+  background: linear-gradient(135deg, var(--dark-light) 0%, var(--dark) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-2xl);
+  text-align: center;
+  max-width: 400px;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-lg);
+  font-size: 2.5rem;
+  color: var(--white);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+}
+
+.success-text {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--white);
+  margin-bottom: var(--spacing-xl);
+}
+
+.close-btn {
+  padding: var(--spacing-sm) var(--spacing-xl);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  color: var(--white);
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============ Footer ============ */
+.footer {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--gray-200);
+  padding: var(--spacing-lg);
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+/* ============ Loading State ============ */
+.loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--white);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 640px) {
+  .store-name {
+    font-size: 1.5rem;
+  }
+
+  .product-name {
+    font-size: 1.5rem;
+  }
+
+  .order-section {
+    padding: var(--spacing-lg);
+  }
+
+  .variant-wrapper {
+    width: 110px;
+  }
+
+  .variant-item {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+/* ============ Searchable Select Dropdown ============ */
+.searchable-select {
+  position: relative;
+  width: 100%;
+}
+
+.searchable-input {
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--bg-input);
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all var(--transition-base);
+  cursor: text;
+}
+
+.searchable-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.searchable-input:hover {
+  background: var(--white);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.searchable-input:focus {
+  outline: none;
+  background: var(--white);
+  border-color: var(--primary);
+  box-shadow: 
+    0 0 0 4px rgba(102, 126, 234, 0.15),
+    0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.searchable-input.error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+
+.select-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(102, 126, 234, 0.15);
+  border-radius: var(--radius-lg);
+  max-height: 280px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 200;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.12),
+    0 4px 12px rgba(102, 126, 234, 0.08);
+  display: none;
+}
+
+.select-dropdown.show {
+  display: block;
+  animation: dropdownSlideIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.select-option {
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 0.95rem;
+  color: var(--text-main);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.select-option:first-child {
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.select-option:last-child {
+  border-bottom: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.select-option:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+  color: var(--primary-dark);
+  padding-inline-start: calc(var(--spacing-md) + 4px);
+}
+
+.select-option.highlighted {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.12) 100%);
+  color: var(--primary-dark);
+}
+
+.select-option.selected {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: var(--white);
+  font-weight: 500;
+}
+
+.select-option .option-code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 24px;
+  padding: 0 var(--spacing-xs);
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-inline-end: var(--spacing-sm);
+  transition: all var(--transition-fast);
+}
+
+.select-option:hover .option-code {
+  background: rgba(102, 126, 234, 0.2);
+  transform: scale(1.05);
+}
+
+.select-option.selected .option-code {
+  background: rgba(255, 255, 255, 0.25);
+  color: var(--white);
+}
+
+.select-no-results {
+  padding: var(--spacing-lg) var(--spacing-md);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.select-no-results::before {
+  content: '📭';
+  font-size: 1.5rem;
+  opacity: 0.6;
+}
+
+/* Scrollbar styling for dropdown */
+.select-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.select-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+  margin: var(--spacing-xs);
+}
+
+.select-dropdown::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.select-dropdown::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  background-clip: padding-box;
+}
