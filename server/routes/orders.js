@@ -50,7 +50,7 @@ router.post('/',
     body('municipality').trim().notEmpty().withMessage('البلدية مطلوبة'),
     body('address').trim().notEmpty().withMessage('العنوان مطلوب'),
     body('productId').trim().notEmpty().withMessage('معرف المنتج مطلوب'),
-    body('variantId').trim().notEmpty().withMessage('يجب اختيار نوع المنتج')
+    body('variantId').optional().trim()
   ],
   async (req, res) => {
     try {

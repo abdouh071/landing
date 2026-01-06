@@ -32,14 +32,17 @@
         <section class="product-section">
           <!-- Main Product Image -->
           <div class="product-image-container">
-            <div class="image-wrapper">
+            <!-- Skeleton Layer -->
+            <div class="skeleton skeleton-image skeleton-layer" id="skeletonImage"></div>
+            <!-- Content Layer -->
+            <div class="image-wrapper content-loaded" style="display: none;">
               <img
                 id="mainProductImage"
-                src="https://via.placeholder.com/500x500/667eea/ffffff?text=Loading..."
+                src=""
                 alt="صورة المنتج"
                 class="main-image"
               />
-              <div class="stock-badge in-stock" id="stockBadge">
+              <div class="stock-badge in-stock" id="stockBadge" style="display: none;">
                 <span data-i18n="inStock">متوفر</span>
               </div>
             </div>
@@ -47,15 +50,25 @@
 
           <!-- Product Header (Title + Price) -->
           <div class="product-header">
-            <h2 class="product-name" id="productName">جاري التحميل...</h2>
-            <div class="product-price" id="productPrice"></div>
+            <!-- Skeleton Layer -->
+            <div class="skeleton skeleton-title skeleton-layer" id="skeletonTitle"></div>
+            <div class="skeleton skeleton-price skeleton-layer" id="skeletonPrice"></div>
+            
+            <!-- Content Layer -->
+            <h2 class="product-name content-loaded" id="productName" style="display: none;"></h2>
+            <div class="product-price content-loaded" id="productPrice" style="display: none;"></div>
           </div>
 
           <!-- Variant Images -->
           <div class="variants-section">
-            <h3 class="variants-title" data-i18n="selectVariant">اختر النوع</h3>
+            <div class="skeleton skeleton-title skeleton-layer" style="width: 120px; height: 1.5rem; margin-bottom: 1rem;"></div>
+            <h3 class="variants-title content-loaded" data-i18n="selectVariant" style="display: none;">اختر النوع</h3>
             <div class="variants-grid" id="variantsGrid">
-              <!-- Variants will be loaded here -->
+              <!-- Skeleton Variant Items -->
+              <div class="skeleton skeleton-variant skeleton-layer"></div>
+              <div class="skeleton skeleton-variant skeleton-layer"></div>
+              <div class="skeleton skeleton-variant skeleton-layer"></div>
+              <div class="skeleton skeleton-variant skeleton-layer"></div>
             </div>
             <p
               class="variant-error"

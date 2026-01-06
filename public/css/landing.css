@@ -902,3 +902,61 @@ body.lang-fr .submit-btn .btn-icon {
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   background-clip: padding-box;
 }
+/* Skeleton Loading */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: #f0f0f0;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeleton-text {
+  height: 1em;
+  margin-bottom: 0.5em;
+  width: 100%;
+}
+
+.skeleton-title {
+  height: 2em;
+  width: 70%;
+  margin-bottom: 1rem;
+}
+
+.skeleton-price {
+  height: 1.5em;
+  width: 30%;
+}
+
+.skeleton-image {
+  width: 100%;
+  padding-bottom: 100%; /* Square aspect ratio */
+  position: relative;
+}
+
+.skeleton-variant {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  display: inline-block;
+  margin: 5px;
+}
+
+/* Hide content when skeleton is active */
+.loading .content-loaded {
+  display: none !important;
+}
+
+/* Hide skeleton when content is loaded */
+.loaded .skeleton-layer {
+  display: none !important;
+}

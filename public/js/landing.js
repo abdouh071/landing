@@ -290,7 +290,8 @@ async function loadProduct() {
     const products = await fetchAPI('/products');
     
     if (products.length === 0) {
-      elements.productName.textContent = 'لا يوجد منتجات';
+      document.getElementById('productName').textContent = 'لا يوجد منتجات';
+      showContent();
       return;
     }
     
@@ -302,6 +303,9 @@ async function loadProduct() {
     
     // Load variants
     await loadVariants(currentProduct.id);
+    
+    // Show content after everything is loaded
+    showContent();
     
   } catch (error) {
     console.error('Error loading product:', error);
@@ -712,4 +716,20 @@ async function handleSubmit(e) {
 // ============ Success Message ============
 function closeSuccessMessage() {
   elements.successMessage.classList.remove('show');
+}
+
+// ============ Skeleton Loading Helper ============
+function showContent() {
+  document.body.classList.remove('loading');
+  document.body.classList.add('loaded');
+  
+  // Show all hidden content loaded elements
+  document.querySelectorAll('.content-loaded').forEach(el => {
+    el.style.display = '';
+  });
+  
+  // Hide all skeletons explicitly (though CSS handles it via .loaded class)
+  document.querySelectorAll('.skeleton-layer').forEach(el => {
+    el.style.display = 'none';
+  });
 }
