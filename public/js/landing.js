@@ -97,7 +97,8 @@ const elements = {
   municipalityWrapper: document.getElementById('municipalitySelectWrapper'),
   // Other
   productIdInput: document.getElementById('productId'),
-  variantIdInput: document.getElementById('variantId')
+  variantIdInput: document.getElementById('variantId'),
+  variantsSection: document.querySelector('.variants-section')
 };
 
 // ============ Initialization ============
@@ -357,9 +358,12 @@ async function loadVariants(productId) {
     elements.variantsGrid.innerHTML = '';
     
     if (variants.length === 0) {
-      elements.variantsGrid.innerHTML = `<p style="color: var(--gray-400);">${translations[currentLang].noVariants}</p>`;
+      if (elements.variantsSection) elements.variantsSection.style.display = 'none';
+      elements.variantsGrid.innerHTML = '';
       return;
     }
+
+    if (elements.variantsSection) elements.variantsSection.style.display = 'block';
     
     variants.forEach(variant => {
       const variantEl = createVariantElement(variant);
@@ -587,7 +591,7 @@ function validateForm() {
   const t = translations[currentLang];
   
   // Check variant selection
-  if (!selectedVariantId) {
+  if (currentVariants.length > 0 && !selectedVariantId) {
     elements.variantError.classList.add('show');
     isValid = false;
   }
