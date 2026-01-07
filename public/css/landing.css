@@ -939,8 +939,10 @@ body.lang-fr .submit-btn .btn-icon {
 
 .skeleton-image {
   width: 100%;
-  padding-bottom: 100%; /* Square aspect ratio */
-  position: relative;
+  max-width: 450px;
+  height: 250px;
+  margin: 0 auto; /* Center it */
+  border-radius: var(--radius-2xl); /* Match image radius */
 }
 
 .skeleton-variant {
